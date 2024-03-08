@@ -33,7 +33,7 @@ export const Chat = () => {
         console.error(error);
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -54,46 +54,50 @@ export const Chat = () => {
 
   return (
     <>
-      <div className="flex justify-start items-center flex-col gap-4 h-screen">
-        <div className="w-full max-w-sm p-4 flex flex-col gap-2 justify-center items-center">
-          <h1 className="btn text-xl text-center">
-            {name.toUpperCase()} JOINED {room.toUpperCase()}
-          </h1>
-          <button
-            onClick={() => {
-              navigate("/");
-            }}
-            className="btn btn-sm"
+      <div className="flex items-center flex-col justify-between gap-4 h-screen">
+        <div className="w-full h-[80vh] flex-1 flex flex-col justify-center items-center">
+          <div className="w-full max-w-sm p-4 flex flex-col gap-2 justify-center items-center">
+            <h1 className="btn text-xl text-center">
+              {name.toUpperCase()} JOINED {room.toUpperCase()}
+            </h1>
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+              className="btn btn-sm"
+            >
+              Join new Chat
+            </button>
+          </div>
+          <div
+            ref={chatWindowRef}
+            className="w-full max-w-sm p-4 h-full overflow-y-scroll"
           >
-            Join new Chat
-          </button>
-        </div>
-        <div
-          ref={chatWindowRef}
-          className="w-full max-w-sm p-4 overflow-y-auto pb-20"
-        >
-          {messageList.map((message, index) => (
-            <Fragment key={index}>
-              <div
-                className={`chat ${
-                  message.user !== name ? "chat-start" : "chat-end"
-                }`}
-              >
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS chat bubble component"
-                      src={`https://api.nilskoepke.com/profile-image/?name=${message.user}&backgroundColor=rgb(33,194,87)`}
-                    />
+            {messageList.map((message, index) => (
+              <Fragment key={index}>
+                <div
+                  className={`chat ${
+                    message.user !== name ? "chat-start" : "chat-end"
+                  }`}
+                >
+                  <div className="chat-image avatar">
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS chat bubble component"
+                        src={`https://api.nilskoepke.com/profile-image/?name=${message.user}&backgroundColor=rgb(33,194,87)`}
+                      />
+                    </div>
                   </div>
+                  <div className="chat-header">
+                    {message.user.toUpperCase()}
+                  </div>
+                  <div className="chat-bubble">{message.text}</div>
                 </div>
-                <div className="chat-header">{message.user.toUpperCase()}</div>
-                <div className="chat-bubble">{message.text}</div>
-              </div>
-            </Fragment>
-          ))}
+              </Fragment>
+            ))}
+          </div>
         </div>
-        <div className="w-full max-w-sm p-4 absolute bottom-0">
+        <div className="w-full max-w-sm p-4">
           <label className="input input-bordered flex items-center gap-2">
             <input
               value={message}
