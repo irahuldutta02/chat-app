@@ -14,17 +14,12 @@ const io = socketIO(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("New user connected");
-
   socket.on("joinRoom", (details) => {
     const { name, room } = details;
     socket.join(room);
 
-    console.log(`${name} joined room ${room}`);
-
     socket.on("newMessage", (message) => {
-      console.log(`New message: ${message}`);
-      io.to(room).emit("newMessageInTheRoom", {user: name, text: message});
+      io.to(room).emit("newMessageInTheRoom", { user: name, text: message });
     });
   });
 });
